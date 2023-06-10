@@ -22,5 +22,38 @@ other machine **Machine B**
 
   set the **Machine B** a Host-only Adapter network interface
   ![image](https://github.com/ArmanTaheriGhaleTaki/diginext-devops-bootcamp/assets/88885103/4fdc251e-e200-47d0-90fc-2a9639b38cfa)   
-  
+ after running the machines every thing is ok but if you run 
+ ```
+ ip a 
+ ``` 
+ in **Machine A** you will se the following output    
+ ![image](https://github.com/ArmanTaheriGhaleTaki/diginext-devops-bootcamp/assets/88885103/39ebd15f-1b67-4217-ad29-698b1f15de43)   
+ enp0s8 interface is down and this interface has internet acsses to be able to up this network interface you have to edit the   
+ ``` 
+ vim /etc/network/interfaces 
+ ```
+ and add this config  
+ 
+ ``` # This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug enp0s3
+iface enp0s3 inet dhcp
+
+allow-hotplug enp0s8 
+iface enp0s8 inet dhcp
+```
+
+and after that up the internet interface  
+``` 
+ifup enp0s8
+```
+![image](https://github.com/ArmanTaheriGhaleTaki/diginext-devops-bootcamp/assets/88885103/6f09bf3f-e78b-424a-a989-6daa7a01c141)
 
