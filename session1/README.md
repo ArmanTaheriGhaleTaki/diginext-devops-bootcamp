@@ -57,3 +57,26 @@ ifup enp0s8
 ```
 ![image](https://github.com/ArmanTaheriGhaleTaki/diginext-devops-bootcamp/assets/88885103/6f09bf3f-e78b-424a-a989-6daa7a01c141)
 
+set the machine to be able to route the packets between its interfaces 
+```
+echo 1 > /proc/sys/net/ipv4/ip_forward
+``` 
+and with iptables route the incomming packets to the ineternet
+```
+iptables -t nat -A POSTROUTING -o enp0s8 -j MASQUERADE 
+```
+in the **Machine B** 
+use this command to change the defaulst gateway 
+```
+ip route add default via 192.168.56.106
+```
+and it's done
+you can verify that by ping the google in **Machine B**
+```
+ping google.com
+```
+or 
+``` 
+curl google.com
+```
+
