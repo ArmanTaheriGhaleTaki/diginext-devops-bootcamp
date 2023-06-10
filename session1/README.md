@@ -66,7 +66,7 @@ and with iptables route the incomming packets to the ineternet
 iptables -t nat -A POSTROUTING -o enp0s8 -j MASQUERADE 
 ```
 in the **Machine B** 
-use this command to change the defaulst gateway 
+use this command to change the defaulte gateway 
 ```
 ip route add default via 192.168.56.106
 ```
