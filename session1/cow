@@ -1,0 +1,63 @@
+https://github.com/cyfdecyf/cow
+
+[Iran]
+
+(1) autossh.sh
+(2) chmod +x autossh.sh
+(3) crontab -e
+(4) @reboot /path/to/script
+
+(5) curl -L git.io/cow | bash  >> default install dir : cow (bin file) : /root/cow   config: /root/.cow/rc
+(6) cow.service path : nano /etc/systemd/system/cow.service
+(7) systemctl daemon-reload  ,  systemctl start cow.service  , systemctl enable cow.service
+(8) important config in .cow/rc :
+	listen = http:/public_ip:port
+	
+	alwaysProxy = true
+	
+	loadBalance = latency
+	
+	proxy = socks5://127.0.0.1:local_port_1
+	proxy = socks5://127.0.0.1:local_port_2
+	proxy = socks5://127.0.0.1:local_port_3
+	
+	username:password
+	
+	core = 2 (in case you have more than 2 core
+	
+---------------------
+cow.service
+---------------------
+[Unit]
+Description=COW - Http Proxy
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/root/cow ./cow
+
+[Install]
+WantedBy=multi-user.target
+---------------------
+[autossh.sh]
+---------------------
+#!/bin/bash
+echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" > /etc/resolv.conf
+AUTOSSH_POLL=11 autossh -M 20011 -fCND local_port_1 root@IP_Kharej -p Port_1
+AUTOSSH_POLL=21 autossh -M 20022 -fCND local_port_2 root@IP_Kharej -p Port_2
+AUTOSSH_POLL=31 autossh -M 20033 -fCND local_port_3 root@IP_Kharej -p Port_3
+systemctl restart cow
+
+---------------------------------------------------------------------------------------------------------
+[Kharej]
+
+nano /etc/ssh/sshd_config
+PermitTunnel yes
+systemctl restart ssh
+---------------------------------------------------------------------------------------------------------
+client for android : super proxy
+clienr for android : potatso
+in windows and linux i'm using firefox proxy for web access
