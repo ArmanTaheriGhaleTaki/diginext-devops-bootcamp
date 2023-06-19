@@ -79,4 +79,7 @@ or
 ``` 
 curl google.com
 ```
+6. 
+[guid to 6th task](https://github.com/ArmanTaheriGhaleTaki/diginext-devops-bootcamp/blob/main/session1/cow)
+
 
